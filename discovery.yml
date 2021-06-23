@@ -1,2 +1,15 @@
 server:
   port: 8083
+
+  server:
+    port: 9000
+  eureka:
+    instance:
+      hostname: localhost
+    client:
+      registerWithEureka: true
+      fetchRegistry: false
+      serviceUrl:
+        defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+    server:
+      wait-time-in-ms-when-sync-empty: 3000
