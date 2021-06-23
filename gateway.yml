@@ -1,14 +1,28 @@
-server:
-  port: 8084
-
 eureka:
   instance:
     hostname: localhost
     port: 9000
   client:
     registerWithEureka: true
-    fetchRegistry: false
+    fetchRegistry: true
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
     server:
       wait-time-in-ms-when-sync-empty: 3000
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: product
+          uri: lb://PRODUCT
+          predicates:
+            - Path=/product/**
+        - id: cart
+          uri: lb://cart
+          predicates:
+            - Path=/cart/**
